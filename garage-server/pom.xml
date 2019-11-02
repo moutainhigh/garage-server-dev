@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yixin</groupId>
+    <artifactId>garage-server</artifactId>
+    <version>1.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>garage-server</name>
+    <description>SafeGarage System Server Project</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.18.RELEASE</version>
+      <!--   <version>2.0.6.RELEASE</version> -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <common.base.version>0.1.3-SNAPSHOT</common.base.version>
+        <shiro.version>1.2.4</shiro.version>
+        <usc.version>1.0.1</usc.version>
+        <swagger2.version>2.4.0</swagger2.version>
+        <resource.delimiter>${}</resource.delimiter>
+        <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+        <!-- 3.0.6 -->
+        <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
+        <druid-version>1.1.10</druid-version>
+    </properties>
+    
+     <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+            	<activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+             <activation>
+            	<activeByDefault>false</activeByDefault>
+             </activation>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <activation>
+            	<activeByDefault>false</activeByDefault>
+             </activation>
+            <properties>
+                <profiles.active>pro</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <activation>
+            	<activeByDefault>false</activeByDefault>
+             </activation>
+            <properties>
+                <profiles.active>uat</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <activation>
+            	<activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <profiles.active>docker</profiles.active>
+            </properties>
+        </profile>
+         <profile>
+            <id>docker24</id>
+            <properties>
+                <profiles.active>docker24</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker96</id>
+            <properties>
+                <profiles.active>docker96</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+    
+
+    <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--</dependency>-->
+		<!-- <dependency>
+		    <groupId>org.apache.velocity</groupId>
+		    <artifactId>velocity-engine-core</artifactId>
+		    <version>2.0</version>
+		</dependency> -->
+		<!-- freemarker 模板引擎 -->
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <!-- <version>2.3.28</version> -->
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-configuration-processor</artifactId>
+		    <optional>true</optional>
+		</dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot-starter.version}</version>
+        </dependency>
+        <!-- mybatis-plus 依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--基础服务包-->
+        <!--<dependency>-->
+            <!--<groupId>com.yixin</groupId>-->
+            <!--<artifactId>common-service</artifactId>-->
+            <!--<version>${common.base.version}</version>-->
+        <!--</dependency>-->
+
+	<!-- 	<dependency>
+			<groupId>com.yixin</groupId>
+			<artifactId>common-job</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency> -->
+		
+		<dependency>
+			<groupId>com.yixin</groupId>
+			<artifactId>wfpt-client</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+        <!--基础工具包-->
+        <dependency>
+            <groupId>com.yixin</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${common.base.version}</version>
+        </dependency>
+		
+		<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    		<version>2.5</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+           
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-cas</artifactId>
+            <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-cache</artifactId>
+            <version>1.4.0-RC2</version>
+        </dependency>
+
+        <!-- usc  -->
+        <dependency>
+            <groupId>com.yixin</groupId>
+            <artifactId>nusc-dto</artifactId>
+            <version>${usc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-redis</artifactId>
+        </dependency>
+        
+		<!-- alibaba  fastJson start-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+		</dependency>
+		<!-- end-->
+		
+        <!--日志中心-->
+        <dependency>
+            <groupId>com.yixin</groupId>
+            <artifactId>log-sys-rpc</artifactId>
+            <version>0.0.5-SNAPSHOT</version>
+        </dependency>
+        <!-- session共享所添加配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.4.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <!-- session共享所添加配置-->
+        
+        <!--Springfox swagger2-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
+        <!-- Springfox Swagger2 -->
+        
+        <!-- 缓存配置 -->
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- ehcache -->
+		 <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <!-- 如果使用redis缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+  		</dependency>
+		
+        <dependency>
+			<groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<!-- 工具包 -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>cn.hutool</groupId>
+		    <artifactId>hutool-all</artifactId>
+		    <version>4.3.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>4.0.1</version>
+		</dependency>
+		<dependency>
+	   		<groupId>org.apache.poi</groupId>
+	    	<artifactId>poi-ooxml</artifactId>
+	    	<version>4.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid-version}</version>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>${druid-version}</version>
+		</dependency>
+		
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>runtime</scope>
+        </dependency> -->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <excludes>
+                    <exclude>test/*</exclude>
+                    <exclude>dev/*</exclude>
+                    <exclude>pro/*</exclude>
+                    <exclude>uat/*</exclude>
+                    <exclude>docker/*</exclude>
+                    <exclude>**/*.xlsx</exclude>
+                </excludes>
+                <!--开启filtering功能  -->  
+            	<filtering>true</filtering>
+            </resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.xlsx</include>
+				</includes>
+			</resource>
+
+            <!--<resource>-->
+                <!--<directory>src/main/resources/${profiles.active}</directory>-->
+            <!--</resource>-->
+            <resource>
+                <directory>src/main/resources/docker</directory>
+                <includes>
+                    <include>*</include>
+                </includes>
+                <targetPath>${project.build.directory}/</targetPath>
+                <filtering>true</filtering>
+            </resource>
+
+
+        </resources>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>public-bak</id>
+            <url>http://nexus.yixincapital.com/repository/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>releases</name>
+            <url>http://nexus.yixincapital.com/repository/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://nexus.yixincapital.com/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+</project>

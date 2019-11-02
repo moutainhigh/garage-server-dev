@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.DeptAreaMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.DeptArea">
+        <id column="id" property="id" />
+        <result column="num" property="num" />
+        <result column="pid" property="pid" />
+        <result column="area_id" property="areaId" />
+        <result column="dept_manager_id" property="deptManagerId" />
+        <result column="simplename" property="simplename" />
+        <result column="fullname" property="fullname" />
+        <result column="version" property="version" />
+        <result column="busi_type" property="busiType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        t1.id, num, t1.pid, t1.area_id, t1.dept_manager_id, t1.simplename, t1.fullname, t1.version,t1.busi_type
+    </sql>
+    
+    <select id="queryAreaDeptList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM sys_dept_area t1 
+        LEFT OUTER JOIN (SELECT * FROM `sys_user_dept` WHERE domain_account=#{domainAccount}) t2
+		ON t2.`dept_id`=t1.`id`
+		WHERE 1=1
+		<if test=" flag =='1'.toString() ">
+            and t2.domain_account=#{domainAccount}
+        </if>
+        <if test=" flag =='0'.toString() ">
+            and t2.domain_account is null
+        </if>
+    </select>
+
+</mapper>

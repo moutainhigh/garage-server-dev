@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.inventory.SgInventoryApprovalBillMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.inventory.SgInventoryApprovalBill">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="approval_opinion" property="approvalOpinion" />
+        <result column="approval_state" property="approvalState" />
+        <result column="finalized_time" property="finalizedTime" />
+        <result column="garage_addresss" property="garageAddresss" />
+        <result column="inventory_home_id" property="inventoryHomeId" />
+        <result column="submitter_name" property="submitterName" />
+        <result column="garage_info_id" property="garageInfoId" />
+    </resultMap>
+
+
+    <!-- DTO　结果映射 -->
+    <resultMap id="DtoResultMap" type="com.yixin.garage.dto.inventory.SgInventoryBillDTO">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="approval_opinion" property="approvalOpinion" />
+        <result column="approval_state" property="approvalState" />
+        <result column="finalized_time" property="finalizedTime" />
+        <result column="garage_addresss" property="garageAddresss" />
+        <result column="inventory_home_id" property="inventoryHomeId" />
+        <result column="submitter_name" property="submitterName" />
+        <result column="garage_info_id" property="garageInfoId" />
+
+        <result column="bill_num" property="billNum" />
+        <result column="garage_name" property="garageInfoName" />
+        <result column="garage_addresss" property="garageAddresss" />
+        <result column="contact" property="contact" />
+        <result column="end_time" property="endTime" />
+
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        inventoryBill.ID, inventoryBill.CREATE_TIME, inventoryBill.CREATOR_DEPARTMENT_ID, inventoryBill.CREATOR_DEPARTMENT_NAME, inventoryBill.CREATOR_ID, inventoryBill.CREATOR_NAME, inventoryBill.IS_DELETED, inventoryBill.UPDATE_TIME, inventoryBill.UPDATOR_DEPARTMENT_ID, inventoryBill.UPDATOR_DEPARTMENT_NAME, inventoryBill.UPDATOR_ID, inventoryBill.UPDATOR_NAME, inventoryBill.VERSION, inventoryBill.approval_opinion, inventoryBill.approval_state, inventoryBill.finalized_time, inventoryBill.garage_addresss, inventoryBill.inventory_home_id, inventoryBill.submitter_name, inventoryBill.garage_info_id
+    </sql>
+
+    <sql id="Bill_Column_List">
+        inventoryHome.bill_num,garageInfo.garage_name,garageInfo.garage_addresss,garageInfo.contact,inventoryHome.end_time
+    </sql>
+
+
+    <select id="pageQueryBill" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>,<include refid="Bill_Column_List"/>
+        from sg_inventory_approval_bill inventoryBill
+        LEFT JOIN sg_inventory_home inventoryHome ON inventoryHome.ID = inventoryBill.inventory_home_id
+        LEFT JOIN sg_garage_info garageInfo ON garageInfo.ID = inventoryBill.garage_info_id
+        <if test="hasRoles == true">
+            LEFT JOIN sg_contact_to_garage_temp garageTemp on garageInfo.id = garageTemp.garage_info_id
+        </if>
+        where  inventoryBill.IS_DELETED = 0
+
+        <!--盘点状态-->
+        <if test="queryDto.approvalState != null ">
+            and inventoryBill.approval_state = #{queryDto.approvalState}
+        </if>
+
+        <!--盘点期数-->
+        <if test="queryDto.billNum != null and queryDto.billNum !=''">
+            and inventoryHome.bill_num = #{queryDto.billNum}
+        </if>
+        <!--车库id-->
+        <if test="queryDto.garageInfoId != null and queryDto.garageInfoId !=''">
+            and garageInfo.id = #{queryDto.garageInfoId}
+        </if>
+
+        <if test="hasRoles == true">
+            and garageTemp.user_name = #{userName}
+        </if>
+        ORDER BY inventoryBill.CREATE_TIME DESC
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.AuditLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.AuditLog">
+        <id column="id" property="id" />
+        <result column="bz_id" property="bzId" />
+        <result column="create_time" property="createTime" />
+        <result column="creator_department_id" property="creatorDepartmentId" />
+        <result column="creator_department_name" property="creatorDepartmentName" />
+        <result column="creator_id" property="creatorId" />
+        <result column="creator_name" property="creatorName" />
+        <result column="is_deleted" property="deleted" />
+        <result column="update_time" property="updateTime" />
+        <result column="updator_department_id" property="updatorDepartmentId" />
+        <result column="updator_department_name" property="updatorDepartmentName" />
+        <result column="updator_id" property="updatorId" />
+        <result column="updator_name" property="updatorName" />
+        <result column="version" property="version" />
+        <result column="buss_id" property="bussId" />
+        <result column="buss_status_code" property="bussStatusCode" />
+        <result column="buss_status_name" property="bussStatusName" />
+        <result column="deal_remark" property="dealRemark" />
+        <result column="deal_time" property="dealTime" />
+        <result column="deal_user_account" property="dealUserAccount" />
+        <result column="deal_user_name" property="dealUserName" />
+        <result column="log_type" property="logType" />
+        <result column="opr_name" property="oprName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, bz_id, create_time, creator_department_id, creator_department_name, creator_id, creator_name, is_deleted, update_time, updator_department_id, updator_department_name, updator_id, updator_name, version, buss_id, buss_status_code, buss_status_name, deal_remark, deal_time, deal_user_account, deal_user_name, log_type, opr_name
+    </sql>
+    <select id="getBussIdByTypeAndDealUser" resultType="string">
+    	SELECT DISTINCT buss_id FROM sys_audit_log t 
+    	where t.log_type=#{logTypeCode} and deal_user_account=#{dealUserAccount}
+    	AND is_deleted=0 
+    	ORDER BY create_time DESC
+		LIMIT #{limitStart},#{rowCount}
+    </select>
+    
+    
+
+</mapper>

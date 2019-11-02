@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.order.SgGarageDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.order.SgGarageDetail">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="alix_num" property="alixNum" />
+        <result column="bill_status" property="billStatus" />
+        <result column="colect_person" property="colectPerson" />
+        <result column="colect_person_num" property="colectPersonNum" />
+        <result column="contract_No" property="contractNo" />
+        <result column="garage_sign" property="garageSign" />
+        <result column="is_cancel" property="isCancel" />
+        <result column="order_type" property="orderType" />
+        <result column="out_reason" property="outReason" />
+        <result column="push_source" property="pushSource" />
+        <result column="remark" property="remark" />
+        <result column="sgGaragOrder_id" property="sgGaragOrderId" />
+        <result column="sgVehicle_id" property="sgVehicleId" />
+        <result column="task_num" property="taskNum" />
+        <result column="vin" property="vin" />
+        <result column="temp_predict_time" property="tempActualTime" />
+        <result column="temp_actual_time" property="tempPredictTime" />
+    </resultMap>
+
+    <resultMap id="detailDTOMap" type="com.yixin.garage.dto.order.SgGarageDetailDTO">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="alix_num" property="alixNum" />
+        <result column="bill_status" property="billStatus" />
+        <result column="colect_person" property="colectPerson" />
+        <result column="colect_person_num" property="colectPersonNum" />
+        <result column="contract_No" property="contractNo" />
+        <result column="garage_sign" property="garageSign" />
+        <result column="is_cancel" property="isCancel" />
+        <result column="order_type" property="orderType" />
+        <result column="out_reason" property="outReason" />
+        <result column="push_source" property="pushSource" />
+        <result column="remark" property="remark" />
+        <result column="sgGaragOrder_id" property="sgGaragOrderId" />
+        <result column="sgVehicle_id" property="sgVehicleId" />
+        <result column="task_num" property="taskNum" />
+        <result column="vin" property="vin" />
+        <result column="temp_predict_time" property="tempActualTime" />
+        <result column="temp_actual_time" property="tempPredictTime" />
+
+        <result column="actual_start_time" property="actualStartTime" />
+        <result column="actual_end_time" property="actualEndTime" />
+        <result column="order_task_num" property="orderTaskNum" />
+        <result column="order_status" property="orderStatus" />
+        <result column="garage_name" property="garageName" />
+        <result column="sgGarageRKDatail_id" property="sgGarageRKDatailId" />
+
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, CREATE_TIME, CREATOR_DEPARTMENT_ID, CREATOR_DEPARTMENT_NAME, CREATOR_ID, CREATOR_NAME, IS_DELETED, UPDATE_TIME, UPDATOR_DEPARTMENT_ID, UPDATOR_DEPARTMENT_NAME, UPDATOR_ID, UPDATOR_NAME, VERSION, alix_num, bill_status, colect_person, colect_person_num, contract_No, garage_sign, is_cancel, order_type, out_reason, push_source, remark, sgGaragOrder_id, sgVehicle_id, task_num, vin,temp_predict_time,temp_actual_time
+    </sql>
+
+    <sql id="detail_Column_List">
+        a.ID, a.CREATE_TIME, a.CREATOR_DEPARTMENT_ID, a.CREATOR_DEPARTMENT_NAME, a.CREATOR_ID, a.CREATOR_NAME, a.IS_DELETED, a.UPDATE_TIME, a.UPDATOR_DEPARTMENT_ID, a.UPDATOR_DEPARTMENT_NAME, a.UPDATOR_ID, a.UPDATOR_NAME, a.VERSION, a.alix_num, a.bill_status, a.colect_person, a.colect_person_num, a.contract_No, a.garage_sign, a.is_cancel, a.order_type, a.out_reason, a.push_source, a.remark, a.sgGaragOrder_id, a.sgVehicle_id, a.task_num, a.vin,a.temp_predict_time,a.temp_actual_time
+   </sql>
+
+    <sql id="rkForErp_Column_List">
+        d.alix_num,
+        c.garage_name,
+        d.vin,
+        d.actual_storage_time,
+        d.property_right_type,
+        d.business_type,
+        d.brandStr,
+        d.brand_modelStr,
+        d.vehicle_classStr,
+        d.modelStr,
+        d.lic_num,
+        d.color,
+        d.mileage
+   </sql>
+
+    <sql id="buildQuerySql">
+        <if test="dto.orderTaskNum != null and dto.orderTaskNum !=''">  <!-- 任务单号 -->
+            AND b.task_num like concat('%',#{dto.orderTaskNum},'%')
+        </if>
+        <if test="dto.alixNum != null and dto.alixNum !=''">   <!-- alix申请编号 -->
+            AND a.alix_num like concat('%',#{dto.alixNum},'%')
+        </if>
+        <if test="dto.vin != null and dto.vin !=''">   <!-- 车架号 -->
+            AND a.vin like concat('%',#{dto.vin},'%')
+        </if>
+        <if test="dto.createTimeBegin != null ">   <!-- 创建时间开始 -->
+            AND date_format(a.CREATE_TIME,'%Y-%m-%d') >= date_format(#{dto.createTimeBegin},'%Y-%m-%d')
+        </if>
+        <if test="dto.createTimeEnd != null ">    <!-- 创建时间结束 -->
+            AND date_format(a.CREATE_TIME,'%Y-%m-%d') &lt;= date_format(#{dto.createTimeEnd},'%Y-%m-%d')
+        </if>
+        <if test="dto.taskNum != null and dto.taskNum !=''">   <!-- 出入库单号 -->
+            AND a.task_num like concat('%',#{dto.taskNum},'%')
+        </if>
+        <if test="dto.billStatus != null ">   <!-- 审批状态 -->
+            AND a.bill_status = #{dto.billStatus}
+        </if>
+    </sql>
+
+    <!-- 出库分页查询 -->
+    <select id="pageQuery" parameterType="com.yixin.garage.dto.order.SgGarageDetailDTO" resultMap="detailDTOMap">
+        SELECT
+            <include refid="detail_Column_List"/>, b.actual_start_time actual_start_time, b.order_status order_status, b.task_num order_task_num, b.sgGarageRKDatail_id sgGarageRKDatail_id,
+        garageInfo.garage_name garage_name, vehicleInfo.actual_storage_time actual_end_time
+
+        FROM
+            sg_garage_detail a LEFT JOIN sg_garage_order b ON a.sgGaragOrder_id = b.ID
+        LEFT JOIN sg_garage_info garageInfo ON b.sgGarageInfoTo_id = garageInfo.ID
+        LEFT JOIN sg_vehicle_info vehicleInfo ON vehicleInfo.id = b.sgVehicle_id
+        WHERE
+
+            a.IS_DELETED = 0 AND b.IS_DELETED = 0 AND a.garage_sign = #{garageSign}
+        <include refid="buildQuerySql"/>
+
+        <if test="dto.sgGarageInfoId != null and dto.sgGarageInfoId !=''">
+            AND b.sgGarageInfoTo_id = #{dto.sgGarageInfoId}
+        </if>
+
+        <if test="garageAdmins != null and garageAdmins.size > 0">
+            AND garageInfo.id IN
+            <foreach collection="garageAdmins" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        ORDER BY a.CREATE_TIME DESC
+    </select>
+
+    <!-- 生成随机数 -->
+    <select id="createTaskNum" parameterType="java.lang.String" resultType="java.lang.String">
+         SELECT task_num FROM sg_garage_detail WHERE task_num like concat('%',#{dateString},'%') AND garage_sign = #{garageSign} ORDER BY CREATE_TIME DESC LIMIT 1
+    </select>
+
+
+    <select id="queryTempOut" parameterType="java.lang.String" resultType="com.yixin.garage.entity.order.SgGarageDetail">
+        SELECT <include refid="Base_Column_List"/> FROM sg_garage_detail WHERE IS_DELETED = 0 AND garage_sign = 0 AND push_source = 1 AND bill_status in (0,1) AND sgGaragOrder_id = #{sgGaragOrderId}
+    </select>
+
+    <select id="queryOutDeatil" parameterType="com.yixin.garage.dto.order.SgGarageOrderDTO" resultType="com.yixin.garage.entity.order.SgGarageDetail">
+         SELECT <include refid="Base_Column_List"/> FROM sg_garage_detail WHERE IS_DELETED = 0 AND bill_status = 5
+            AND sgGaragOrder_id = #{dto.id}
+    </select>
+
+    <select id="getInfoListByBillNum" resultType="java.util.Map">
+        SELECT
+          <include refid="rkForErp_Column_List"/>
+        from
+        sg_vehicle_info d
+        LEFT JOIN sg_garage_info c ON c.ID = d.sgGarageInfo_Id
+        WHERE
+        d.alix_num = #{alixNum}
+        ORDER BY
+        d.CREATE_TIME DESC
+        LIMIT 1
+    </select>
+
+
+    <select id="getContractNoByBillNum" resultType="java.lang.String">
+        SELECT
+        d.contract_No
+        from
+        sg_garage_detail d
+        WHERE
+        d.alix_num = #{alixNum}
+        ORDER BY
+        d.CREATE_TIME DESC
+        LIMIT 1
+    </select>
+
+
+    <select id="getGarageInExis" parameterType="com.yixin.garage.dto.order.SgGarageDetailDTO" resultType="com.yixin.garage.entity.order.SgGarageDetail">
+        SELECT <include refid="Base_Column_List"/> FROM sg_garage_detail WHERE IS_DELETED = 0 AND garage_sign = 1 AND push_source = 0  AND bill_status != 8 AND vin = #{dto.vin} AND alix_num = #{dto.alixNum}
+    </select>
+
+</mapper>

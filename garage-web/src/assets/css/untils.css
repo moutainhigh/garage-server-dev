@@ -1,0 +1,311 @@
+/*面包屑的样式*/
+a:active{
+	color: #fff;
+}
+.content{
+	height: auto;
+	margin-right:24px;
+	margin-left:24px;
+	background-color: #ffffff;
+	-webkit-box-shadow: #EEEEEE 0px 0px 8px 4px;
+	-moz-box-shadow: #EEEEEE 0px 0px 8px 4px;
+	box-shadow: #EEEEEE 0px 0px 8px 4px;
+}
+.userNavigation {
+	font-size: 14px;
+	color: #666666;
+	padding: 20px 20px 20px 24px;
+}
+/*设置最大宽度*/
+.max_width100{
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+.max_width120{
+	width: 120px;
+	text-align: right;
+	display: inline-block;
+}
+/*设置最小高度*/
+.min_height40{
+	min-height:500px; 
+	padding-bottom: 20px;
+}
+/*字号*/
+.fontSize18{
+	font-size: 18px;
+}
+/*宽高左右移动的样式*/
+.margin20{
+	margin: 20px;
+}
+.marTop20{
+	margin:20px 0px;
+}
+.padTop20{
+	padding-top: 20px;
+}
+.padBom20{
+	padding-bottom: 20px;
+}
+.marTop10{
+	
+	margin-top:10px;
+}
+.padding20{
+	padding: 20px;
+}
+.padd20{
+	padding:0 20px;
+}
+.padd30{
+	padding:0 30px;
+}
+.paddB20RL30{
+	padding:0 30px 20px 30px;
+}
+.padding20{
+	padding: 20px 20px;
+}
+.marleRi12{
+	margin-left: -12px;
+	margin-right: -12px;
+}
+.marRight100{
+	margin-right: 100px;
+}
+.marRight20{
+	margin-right: 20px;
+}
+.marLeft20{
+	margin-left: 20px;
+}
+.marLeft100{
+	margin-left: 100px;
+}
+.marginRight8{
+	margin-right: 8px;
+}
+.marleri30{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.marbom20{
+	margin-bottom: 20px;
+}
+.disBlock{
+	display:inline-block;
+}
+/*表格上方的按钮添加样式*/
+.width100{
+	width: 100%;
+}
+.textRight{
+	text-align: right;
+}
+/*按钮的样式*/
+.search{
+	font-size: 14px;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+    padding: 0 16px;
+    color:#fff;
+    margin-right:8px;
+}
+.search:hover{
+	background-color: #0e75e1
+}
+.reset:hover {
+    background-color: #f0f0f0;
+}
+.bj1d86f4{
+	background-color: #1d86f4;
+}
+.reset{
+	border: 1px solid #d8d8d8;
+    color: #666;
+    border-radius: 2px;
+}
+.disBlock{
+	display: inline-block;
+}
+/*表格切换的样式*/
+.borderc0dfff{
+	border:1px solid #e9eaec;
+}
+.apply_list_nav{
+	border-bottom:2px solid #c0dfff;
+	margin-bottom:20px;
+	margin-left:30px
+}
+.apply_list_nav ul{
+	position:relative;
+	top:3px
+}
+.apply_list_nav ul li{
+	display:inline-block;
+	color:#333;
+	font-size:14px;
+	margin-right:40px;
+	cursor:pointer;
+	padding-bottom:3px;
+}
+.apply_list_nav ul li .apply_tip{
+	color: #fff;
+    font-size: 12px;
+    background-color: #fd6206;
+    padding: 2px 9px;
+    border-radius: 10px;
+    position: relative;
+    top: -8px;
+    display: inline-block;
+}
+.apply_list_nav .state_fouc{
+	color:#1d86f4;
+	border-bottom:4px solid #1d86f4;
+	position:relative
+}
+.apply_list_nav .tabtopBox{
+	text-align:right;
+	margin-top:29px;
+	height:21px;
+	margin-bottom:6px
+}
+.infoContent{
+    /*padding-left: 20px;*/
+
+    margin:40px 20px;
+    line-height: 36px;
+}
+.infoContentTitle{
+    background-color: #f8f8f9;
+    border:1px solid rgba(204, 204, 204, 1);
+}
+/*边框*/
+.borderTopdashed{
+	border-top: 1px dashed rgba(204, 204, 204, 1);
+}
+.borderRgba{
+	border: 1px solid rgba(204, 204, 204, 1)
+}
+.bordere3e8ee{
+	border:1px solid #e3e8ee;
+}
+.borderTopnone{
+	border-top:none; 
+}
+.borderBomnone{
+	border-bottom:none; 
+}
+.borderBomDashed{
+	border-bottom:1px dashed  rgba(204, 204, 204, 1);
+}
+.hei40lin5{
+	line-height: 5px;
+    height: 40px;
+    padding-left: 10px;
+    background-color: #ebf7ff;
+    color: #666;
+}
+.borBom{
+	border:1px solid #eee;
+}
+.borTopNoe{
+	border-top:none; 
+}
+/*手写表格的样式*/
+.tablew100{
+	width: 95%;
+}
+.tablew100 tr th {
+	width: 10%;
+	border-bottom: 1px solid #e9eaec;
+	height: 40px;
+    line-height: 40px;
+    font-weight: 400;
+}
+.tablew100 tr td,tr th{
+	width: 10%;
+	border-right: 1px solid #e9eaec;
+	text-align: center;
+	border-bottom: 1px solid #e9eaec;
+}
+/*浮动*/
+.floarRight{
+	float: right;
+}
+.floarLeft{
+	float: left;
+}
+.displayLine{
+	display: inline-block;
+	width: 200px;
+	border: 1px solid #666;
+}
+.clears{
+	clear: both;
+}
+.textAlignCer{
+	text-align: center;
+}
+/*底部的按钮*/
+/*详情页底部按钮*/
+.footerButton {
+  margin-top: 30px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+.footerButton .vbn {
+  width: 120px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  display: inline-block;
+  line-height: 40px;
+  cursor: pointer;
+}
+.footerButton .normal {
+  background-color: #1d86f4;
+  color: #fff;
+}
+.footerButton .normal:hover {
+  background-color: #0e75e1;
+}
+.footerButton .nonormal {
+  border: 1px solid #d5d5d5;
+  background-color: #fff;
+  color: #333;
+}
+.footerButton .nonormal:hover {
+  background-color: #f0f0f0;
+}
+/*弹框*/
+.modealHeader{ 
+	font-size: 14px;
+	color: #000;
+	line-height: 36px;
+}
+.closeAble{ 
+	float: right;
+	cursor: pointer;
+	line-height:2;
+}
+.cursorPointer{
+	cursor: pointer;
+}
+.purchseInfo{
+        border:1px solid #ccc;
+        font-size: 14px;
+        height: 500px;
+        margin-bottom: 20px;
+    }
+    .infoTitle{
+        background-color: #f8f8f9;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);
+    }

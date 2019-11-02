@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.garage.SgGarageInfoLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.garage.SgGarageInfoLog">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="event" property="event" />
+        <result column="remark" property="remark" />
+        <result column="sgGarageInfoId" property="sgGarageInfoId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, CREATE_TIME, CREATOR_DEPARTMENT_ID, CREATOR_DEPARTMENT_NAME, CREATOR_ID, CREATOR_NAME, IS_DELETED, UPDATE_TIME, UPDATOR_DEPARTMENT_ID, UPDATOR_DEPARTMENT_NAME, UPDATOR_ID, UPDATOR_NAME, VERSION, event, remark, sgGarageInfoId
+    </sql>
+
+
+    <!-- 单个车库日志分页查询 -->
+    <select id="pageQueryLog" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sg_garage_info_log where  IS_DELETED = 0
+
+        <if test="queryDto.garageId != null">
+            and sgGarageInfoId = #{queryDto.garageId}
+        </if>
+        ORDER BY CREATE_TIME DESC
+    </select>
+
+    <!-- DTO　结果映射 -->
+    <resultMap id="DtoResultMap" type="com.yixin.garage.dto.garage.YxGarageInfoLogDTO">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="event" property="event" />
+        <result column="remark" property="remark" />
+        <result column="sgGarageInfoId" property="sgGarageInfoId" />
+    </resultMap>
+
+
+</mapper>

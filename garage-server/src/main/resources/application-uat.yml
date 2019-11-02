@@ -1,0 +1,161 @@
+server: 
+  port: 8080
+  contextPath: /garage
+  #https
+  tomcat: 
+    remote_ip_header: x-forwarded-for
+    protocol_header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  use-forward-headers: true
+  
+spring:
+  application: 
+    name: garage-server
+  datasource: 
+    url: jdbc:mysql://10.1.4.31:5506/safegarageuat?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=CTT
+    username: safegarageuat_writer
+    password: nopass.2
+    driverClassName: com.mysql.jdbc.Driver
+    filters: wall,mergeStat
+    logSlowSql: true
+  redis:
+    cluster:
+      nodes: redis-g1-01.uat.bd.dk:6379,redis-g1-04.uat.bd.dk:6379,redis-g1-06.uat.bd.dk:6379
+    pool:
+      max-active: 30
+      max-idle: 10
+      max-wait: -1
+      min-idle: 0
+  session: 
+    store-type: none
+  rabbitmq: 
+    addresses: 10.1.2.20:5672
+    vHost: rentcar_uat
+    username: guest
+    password: guest
+yixin: 
+  projectName: ${spring.application.name}
+      
+mybatis-plus:
+  mapper-locations:
+    - classpath:/mapper/*.xml
+  type-aliases-package: com.yixin.garage.entity
+  global-config: 
+    refresh: false
+    db-config: 
+      id-type: id_worker_str  #全局默认主键类型
+      #逻辑已删除值,(逻辑删除下有效)
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      field-strategy: ignored
+  configuration: 
+    cache-enabled: true  #该配置影响的所有映射器中配置的缓存的全局开关
+    lazyLoadingEnabled: true #全局性设置懒加载。如果设为‘false’，则所有相关联的都会被初始化加载。
+    aggressive-lazy-loading: true  #将积极加载改为消极加载及按需加载 
+    logImpl: org.apache.ibatis.logging.slf4j.Slf4jImpl # 打印sql语句,调试用,不打sql时注释该行配置
+    
+
+garage:
+  spring-session-open: false      #是否开启spring session,如果是多机环境需要开启(true/false)
+  session-invalidate-time: 1800     #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
+  session-validation-interval: 900  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+  swagger-open: false
+  cache: 
+    enable: true #是否开启缓存
+    type: redisCacheManager # 可选参数： ehCacheCacheManager | redisCacheManager, 该项不配置时两个CacheManager都创建，primary为redisCacheManager
+  sql-performance-enable: true # 是否开启 SQL执行效率插件
+env: uat
+
+
+garageRole:
+   garageManageRoleId: 4620 #安全车库 - 车库管理员
+   disposeCommissionerRoleId: 4621 #安全车库 - 自建库处置专员
+   assetsCommissionerRoleId: 4622 #安全车库 - 资产经理
+   garageChecklistRoleId: 4648 #安全车库 - 车库一览
+
+log:
+  path: garage-logs
+
+
+
+shiro:
+  casServerUrlPrefix: https://cas.uat.yixincapital.com/casserver
+  casService: https://safe-garage.uat.yixincapital.com/garage/shiro-cas
+  casServerList: http://10.1.2.243:8080/garage/shiro-cas
+
+#USC config
+usc:
+  getAdjunctByDomainAccountAndSystemId: http://usc-web.uat.bd.dk/nusc-web/api/otherService/getAdjunctByDomainAccountAndSystemId
+  findResourceByUser: http://usc-web.uat.bd.dk/nusc-web/api/otherService/findResourceByUser
+  getPermissionByDomainAccountAndSystemId1: http://usc-web.uat.bd.dk/nusc-web/api/userDubboService/getPermissionByDomainAccountAndSystemId1
+  getUsersInfoByRoleId: http://usc-web.uat.bd.dk/nusc-web/api/userDubboService/getUsersInfoByRoleId?roleId=
+  getUserInfoByDomainAccount: http://usc-web.uat.bd.dk/nusc-web/api/userDubboService/getUserInfoByDomainAccount?domainAccount=
+  nuscWebApi: http://usc-web.uat.bd.dk/nusc-web/api/
+  getUserByPhoneNO: http://usc-web.uat.bd.dk/nusc-web/api/userDubboService/getUserByPhoneNO?phoneNO=
+  systemId: 10287 #根据不同环境配置
+
+
+basedata:
+  basedataURL: https://basedata.uat.yixincapital.com
+  getSubRegionsUrl: /basedata/api/basicRegion/getSubRegions
+  getProvincesUrl: /basedata/api/basicRegion/getProvinces
+
+loan:
+  editRole: 4442
+  checkRole: 4465
+  partmentRole: 4462
+  ziguanRole: 4465
+  ziguanLeaderRole: 4466
+  ziguanJingliRole: 4476
+role: 
+  financing: 
+      BD: 4442 #融资BD
+      areaLeader: 4462 #融资大区总监
+      fundOperator: 4465 #资金管理部操作员
+      fundDirector: 4476 #资金管理部总监
+      fundPIC: 4466 #资金管理部负责人
+      chairman: 4464 #总裁
+  CFO: 4469
+fund:
+   partmentRole: 4466
+   vpRole: 4464
+   editRole: 4465
+   submitRole: 4467
+   partmentJingliRole: 4476
+   
+#msgCenter config
+msgCenter: https://mc-web.uat.yixincapital.com/mc/yxMessage/send
+mailfrom: 易鑫车商金服部<yixinkp@notice.daikuan.com>
+mailTo : yyue@yxqiche.com
+mailCc: libochen@yxqiche.com
+
+#邮件格式
+mailFormat: msg,eml
+
+#文件服务器地址
+fileServiceURL: https://fileserver.uat.yixincapital.com
+#文件服务器地址（展示图片用）
+fileServerUrl: https://fileserver.uat.yixincapital.com
+#查看图片
+viewFileServerPath: http://filestore.uat.yixincapital.com/
+  
+#获取银企日滚动数据地址
+paymentData: 
+  url: http://172.31.12.37:8080/payment/dataManage/countInfo
+  
+#获取中台日滚动数据地址
+ztDayData: 
+  url: http://hscsm.uat.yixincapital.com/hscsm/api/public/day/flow/selectDataByDay
+#获取中台月滚动数据地址
+ztMonthData: 
+  url: http://hscsm.uat.yixincapital.com/hscsm/api/public/month/flow/selectDataByMonth
+#车型库
+carStyleUrl: http://vehicletypelib-web.uat.bd.dk/vehicletypelib-web/api
+
+#中台url
+sgToErpUrl: https://hscsm.uat.yixincapital.com/hscsm
+
+fileContextPath: /data1/d_info/garage-server/
+
+#进销存
+rentCarUrl: https://rentcar-web.uat.yixincapital.com/rentcar-web/

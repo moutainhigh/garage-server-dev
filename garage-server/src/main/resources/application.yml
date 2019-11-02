@@ -1,0 +1,10 @@
+#当前激活配置
+spring:
+  profiles:
+    active: ${profiles.active}
+
+  http:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 10Mb
+

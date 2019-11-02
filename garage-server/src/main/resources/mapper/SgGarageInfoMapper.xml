@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.garage.SgGarageInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.garage.SgGarageInfo">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="city" property="city" />
+        <result column="cityStr" property="cityStr" />
+        <result column="contact" property="contact" />
+        <result column="contact_tele" property="contactTele" />
+        <result column="country" property="country" />
+        <result column="countryStr" property="countryStr" />
+        <result column="garage_addresss" property="garageAddresss" />
+        <result column="garage_name" property="garageName" />
+        <result column="garage_num" property="garageNum" />
+        <result column="garage_status" property="garageStatus" />
+        <result column="parked_num" property="parkedNum" />
+        <result column="parking_num" property="parkingNum" />
+        <result column="province" property="province" />
+        <result column="provinceStr" property="provinceStr" />
+        <result column="remark" property="remark" />
+        <result column="tenancy_begin_date" property="tenancyBeginDate" />
+        <result column="tenancy_end_date" property="tenancyEndDate" />
+        <result column="operate_attr" property="operateAttr" />
+        <result column="contact_cardID" property="contactCardID" />
+        <result column="tenancy_sign" property="tenancySign" />
+        <result column="delivery_tele" property="deliveryTele" />
+        <result column="parkingCost_day" property="parkingcostDay" />
+        <result column="parkingCost_hour" property="parkingcostHour" />
+        <result column="parkingCost_month" property="parkingcostMonth" />
+        <result column="yxAttachment" property="yxAttachment" />
+        <result column="invoice_Type" property="invoiceType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        garageInfo.ID, garageInfo.CREATE_TIME, garageInfo.CREATOR_DEPARTMENT_ID,
+        garageInfo.CREATOR_DEPARTMENT_NAME, garageInfo.CREATOR_ID, garageInfo.CREATOR_NAME,
+        garageInfo.IS_DELETED, garageInfo.UPDATE_TIME,
+        garageInfo.UPDATOR_DEPARTMENT_ID, garageInfo.UPDATOR_DEPARTMENT_NAME, garageInfo.UPDATOR_ID,
+        garageInfo.VERSION, garageInfo.city, garageInfo.cityStr, garageInfo.contact, garageInfo.contact_tele,
+        garageInfo.country,
+        garageInfo.countryStr, garageInfo.garage_addresss, garageInfo.garage_name, garageInfo.garage_num,
+        garageInfo.garage_status,
+        garageInfo.parked_num, garageInfo.parking_num, garageInfo.province, garageInfo.provinceStr,
+        garageInfo.remark, garageInfo.tenancy_begin_date,
+        garageInfo.tenancy_end_date, garageInfo.operate_attr, garageInfo.contact_cardID, garageInfo.tenancy_sign,
+        garageInfo.delivery_tele,
+        garageInfo.large_parking, garageInfo.parkingCost_day, garageInfo.parkingCost_hour, garageInfo.parkingCost_month,
+        garageInfo.small_parking, garageInfo.standard_parking, garageInfo.yxAttachment, garageInfo.invoice_Type
+    </sql>
+
+
+    <!-- 列表分页查询 -->
+    <select id="pageQuery" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sg_garage_info garageInfo
+        <if test="hasRoles == true">
+            LEFT JOIN sg_contact_to_garage_temp garageTemp on garageInfo.id = garageTemp.garage_info_id
+        </if>
+            where  garageInfo.IS_DELETED = 0
+        <!-- 查询条件赋值 -->
+        <include refid="pageQueryParamSet"></include>
+        ORDER BY garageInfo.CREATE_TIME DESC
+    </select>
+
+    <!-- DTO　结果映射 -->
+    <resultMap id="DtoResultMap" type="com.yixin.garage.dto.garage.SgGarageInfoDTO">
+        <id column="ID" property="id" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATOR_DEPARTMENT_ID" property="creatorDepartmentId" />
+        <result column="CREATOR_DEPARTMENT_NAME" property="creatorDepartmentName" />
+        <result column="CREATOR_ID" property="creatorId" />
+        <result column="CREATOR_NAME" property="creatorName" />
+        <result column="IS_DELETED" property="deleted" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="UPDATOR_DEPARTMENT_ID" property="updatorDepartmentId" />
+        <result column="UPDATOR_DEPARTMENT_NAME" property="updatorDepartmentName" />
+        <result column="UPDATOR_ID" property="updatorId" />
+        <result column="UPDATOR_NAME" property="updatorName" />
+        <result column="VERSION" property="version" />
+        <result column="city" property="city" />
+        <result column="cityStr" property="cityStr" />
+        <result column="contact" property="contact" />
+        <result column="contact_tele" property="contactTele" />
+        <result column="country" property="country" />
+        <result column="countryStr" property="countryStr" />
+        <result column="garage_addresss" property="garageAddresss" />
+        <result column="garage_name" property="garageName" />
+        <result column="garage_num" property="garageNum" />
+        <result column="garage_status" property="garageStatus" />
+        <result column="parked_num" property="parkedNum" />
+        <result column="parking_num" property="parkingNum" />
+        <result column="province" property="province" />
+        <result column="provinceStr" property="provinceStr" />
+        <result column="remark" property="remark" />
+        <result column="tenancy_begin_date" property="tenancyBeginDate" />
+        <result column="tenancy_end_date" property="tenancyEndDate" />
+        <result column="operate_attr" property="operateAttr" />
+        <result column="contact_cardID" property="contactCardID" />
+        <result column="tenancy_sign" property="tenancySign" />
+        <result column="delivery_tele" property="deliveryTele" />
+        <result column="parkingCost_day" property="parkingCostDay" />
+        <result column="parkingCost_hour" property="parkingCostHour" />
+        <result column="parkingCost_month" property="parkingCostMonth" />
+        <result column="invoice_Type" property="invoiceType" />
+    </resultMap>
+
+    <select id="createGarageNum" resultType="string">
+        select
+         max(garage_num) FROM sg_garage_info WHERE IS_DELETED = 0
+        <!-- 查询条件赋值 -->
+        <!--AND garage_num like '%${queryDto.garageNum}%'-->
+        AND garage_num like #{queryDto.garageNum}
+    </select>
+
+
+    <!-- 融资计划列表分页查询条件赋值 -->
+    <sql id="pageQueryParamSet">
+
+        <!--  根据车库编号查询 -->
+        <if test="queryDto.garageNum != null and queryDto.garageNum !=''">
+            AND garageInfo.garage_num like '%${queryDto.garageNum}%'
+        </if>
+        <!--  根据车库名称查询 -->
+        <if test="queryDto.garageName != null and queryDto.garageName !=''">
+            AND garageInfo.garage_name like '%${queryDto.garageName}%'
+        </if>
+        <!--  根据省份查询 -->
+        <if test="queryDto.province != null and queryDto.province !=''">
+            and garageInfo.province = #{queryDto.province}
+        </if>
+        <!--  根据城市查询 -->
+        <if test="queryDto.city != null and queryDto.city !=''">
+            and garageInfo.city = #{queryDto.city}
+        </if>
+        <!--  根据区县查询 -->
+        <if test="queryDto.country != null and queryDto.country !=''">
+            and garageInfo.country = #{queryDto.country}
+        </if>
+
+        <!--  根据车位状态查询 -->
+        <if test="queryDto.parkingStatus != null and queryDto.parkingStatus =='1'.toString()">
+            and garageInfo.parking_num = parked_num
+        </if>
+
+        <if test="queryDto.parkingStatus != null and queryDto.parkingStatus =='0'.toString()">
+            and garageInfo.parking_num != parked_num
+        </if>
+
+        <!--  根据经营属性查询 -->
+        <if test="queryDto.operateAttr != null and queryDto.operateAttr !=''">
+            and garageInfo.operate_attr = #{queryDto.operateAttr}
+        </if>
+
+        <!--  根据车库状态查询 -->
+        <if test="queryDto.garageStatus != null and queryDto.garageStatus !=''">
+            and garageInfo.garage_status = #{queryDto.garageStatus}
+        </if>
+
+        <if test="hasRoles == true">
+            and garageTemp.IS_DELETED = false
+            and garageTemp.contact = #{queryDto.creatorName}
+        </if>
+    </sql>
+
+
+
+    <select id="getGarageInfoList" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+            FROM sg_garage_info garageInfo WHERE garageInfo.IS_DELETED = 0
+
+        <if test="isAll == true">
+            AND garageInfo.garage_status is not null
+        </if>
+
+        <if test="isAll == false">
+            AND garageInfo.garage_status != 1
+        </if>
+
+        <!--  根据车库名称查询 -->
+        <if test="queryDto.garageName != null and queryDto.garageName !=''">
+            AND garageInfo.garage_name like '%${queryDto.garageName}%'
+        </if>
+
+        <if test="listQuery != null and listQuery.size > 0">
+            and garageInfo.id in
+            <foreach collection="listQuery" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <select id="queryGarageInfoByName" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM sg_garage_info garageInfo WHERE garageInfo.IS_DELETED = 0
+        <if test="name != null">
+            and garageInfo.garage_name = #{name}
+        </if>
+    </select>
+
+
+</mapper>

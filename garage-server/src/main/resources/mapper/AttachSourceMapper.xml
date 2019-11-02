@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yixin.garage.dao.AttachSourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yixin.garage.entity.AttachSource">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="creator_department_id" property="creatorDepartmentId" />
+        <result column="creator_department_name" property="creatorDepartmentName" />
+        <result column="creator_id" property="creatorId" />
+        <result column="creator_name" property="creatorName" />
+        <result column="is_deleted" property="deleted" />
+        <result column="update_time" property="updateTime" />
+        <result column="updator_department_id" property="updatorDepartmentId" />
+        <result column="updator_department_name" property="updatorDepartmentName" />
+        <result column="updator_id" property="updatorId" />
+        <result column="updator_name" property="updatorName" />
+        <result column="version" property="version" />
+        <result column="attch_path" property="attchPath" />
+        <result column="attch_type" property="attchType" />
+        <result column="buss_id" property="bussId" />
+        <result column="compress_attch_path" property="compressAttchPath" />
+        <result column="source_attch_name" property="sourceAttchName" />
+        <result column="buss_type" property="bussType" />
+        <result column="view_url" property="viewUrl" />
+    </resultMap>
+
+    <resultMap id="attDTOMap" type="com.yixin.garage.dto.sys.AttachSourceDTO">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="creator_department_id" property="creatorDepartmentId" />
+        <result column="creator_department_name" property="creatorDepartmentName" />
+        <result column="creator_id" property="creatorId" />
+        <result column="creator_name" property="creatorName" />
+        <result column="is_deleted" property="deleted" />
+        <result column="update_time" property="updateTime" />
+        <result column="updator_department_id" property="updatorDepartmentId" />
+        <result column="updator_department_name" property="updatorDepartmentName" />
+        <result column="updator_id" property="updatorId" />
+        <result column="updator_name" property="updatorName" />
+        <result column="version" property="version" />
+        <result column="attch_path" property="attchPath" />
+        <result column="attch_type" property="attchType" />
+        <result column="buss_id" property="bussId" />
+        <result column="compress_attch_path" property="compressAttchPath" />
+        <result column="source_attch_name" property="sourceAttchName" />
+        <result column="buss_type" property="bussType" />
+        <result column="view_url" property="viewUrl" />
+    </resultMap>
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_time, creator_department_id, creator_department_name, creator_id, creator_name, is_deleted, update_time, updator_department_id, updator_department_name, updator_id, updator_name, version, attch_path, attch_type, buss_id, compress_attch_path, source_attch_name, buss_type,view_url
+    </sql>
+
+
+    <select id="queryAtts" parameterType="java.lang.String" resultMap="attDTOMap">
+        SELECT <include refid="Base_Column_List"/> FROM sg_attach_source WHERE IS_DELETED = 0 AND buss_id = #{bussId}
+        <if test="type != null and type !=''">
+            AND attch_type = #{type}
+        </if>
+    </select>
+
+</mapper>

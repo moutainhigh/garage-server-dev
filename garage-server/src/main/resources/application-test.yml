@@ -1,0 +1,165 @@
+server: 
+  port: 8080
+  contextPath: /garage
+   # 配置为支持ssl,该配置将指示tomcat从HTTP头信息中去获取协议信息
+  tomcat: 
+    remote_ip_header: x-forwarded-for
+    protocol_header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  use-forward-headers: true
+spring:
+  application: 
+    name: garage-server
+  datasource: 
+    url: jdbc:mysql://192.168.145.160:3306/garage-server?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=CTT
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    filters: wall,mergeStat
+    logSlowSql: true
+
+  redis:
+    cluster:
+      nodes: Centos6701:6379,Centos6701:6380,Centos6702:6380,Centos6702:6379,Centos6703:6380,Centos6703:6379
+    pool:
+      max-active: 100
+      max-idle: 10
+      max-wait: 1
+      min-idle: 1
+  session: 
+    store-type: none
+  rabbitmq: 
+    addresses: 192.168.145.161:5672,192.168.145.162:5672,192.168.145.163:5672
+    vHost: rentcar
+    username: guest
+    password: guest
+yixin: 
+  projectName: ${spring.application.name}
+      
+mybatis-plus:
+  mapper-locations:
+    - classpath:/mapper/*.xml
+  type-aliases-package: com.yixin.garage.entity
+  global-config: 
+    refresh: true
+    db-config: 
+      id-type: id_worker  #全局默认主键类型
+      #逻辑已删除值,(逻辑删除下有效)
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      field-strategy: ignored
+  configuration: 
+    cache-enabled: true  #该配置影响的所有映射器中配置的缓存的全局开关
+    lazyLoadingEnabled: true #全局性设置懒加载。如果设为‘false’，则所有相关联的都会被初始化加载。
+    aggressive-lazy-loading: true  #将积极加载改为消极加载及按需加载 
+    logImpl: org.apache.ibatis.logging.slf4j.Slf4jImpl # 打印sql语句,调试用
+
+
+garage:
+  spring-session-open: false      #是否开启spring session,如果是多机环境需要开启(true/false)
+  session-invalidate-time: 1800     #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
+  session-validation-interval: 900  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+  swagger-open: true
+  cache: 
+    enable: true #是否开启缓存
+    type: redisCacheManager # 可选参数： ehCacheCacheManager | redisCacheManager, 该项不配置时两个CacheManager都创建，primary为redisCacheManager
+  sql-performance-enable: true # 是否开启 SQL执行效率插件
+env: test
+
+
+
+garageRole:
+   garageManageRoleId: 4574 #安全车库 - 车库管理员
+   disposeCommissionerRoleId: 4575 #安全车库 - 自建库处置专员
+   assetsCommissionerRoleId: 4576 #安全车库 - 资产经理
+   garageChecklistRoleId: 4591 #安全车库 - 车库一览
+
+log:
+  path: garage-logs
+
+
+
+shiro:
+  casServerUrlPrefix: http://cas.test.bd.dk/casserver/
+  casService: http://192.168.145.33/garage/shiro-cas
+  casServerList: http://192.168.177.137:8080/garage/shiro-cas
+
+#USC config
+usc:
+  getAdjunctByDomainAccountAndSystemId: http://192.168.145.39:8080/nusc-web/api/otherService/getAdjunctByDomainAccountAndSystemId
+  findResourceByUser: http://192.168.145.39:8080/nusc-web/api/otherService/findResourceByUser
+  getPermissionByDomainAccountAndSystemId1: http://192.168.145.39:8080/nusc-web/api/userDubboService/getPermissionByDomainAccountAndSystemId1
+  getUsersInfoByRoleId: http://192.168.145.39:8080/nusc-web/api/userDubboService/getUsersInfoByRoleId?roleId=
+  getUserInfoByDomainAccount: http://192.168.145.39:8080/nusc-web/api/userDubboService/getUserInfoByDomainAccount?domainAccount=
+  nuscWebApi: http://192.168.145.39:8080/nusc-web/api/
+  getUserByPhoneNO: http://192.168.145.39:8080/nusc-web/api/userDubboService/getUserByPhoneNO?phoneNO=
+  systemId: 10309
+
+
+basedata:
+  basedataURL: http://192.168.145.99:8081
+  getSubRegionsUrl: /basedata/api/basicRegion/getSubRegions
+  getProvincesUrl: /basedata/api/basicRegion/getProvinces
+
+loan:
+  editRole: 4432
+  checkRole: 4436
+  partmentRole: 4433
+  ziguanRole: 4436
+  ziguanLeaderRole: 4437
+  ziguanJingliRole: 4465
+role:
+  financing: 
+      BD: 4432 #融资BD
+      areaLeader: 4433 #融资大区总监
+      fundOperator: 4436 #资金管理部操作员
+      fundDirector: 4465 #资金管理部总监
+      fundPIC: 4437 #资金管理部负责人
+      chairman: 4434 #总裁
+  CFO: 4460
+fund:
+   partmentRole: 4437
+   vpRole: 4434
+   editRole: 4436
+   submitRole: 4432
+   partmentJingliRole: 4465
+   
+
+#msgCenter config
+msgCenter: http://192.168.145.106:8084/mc/yxMessage/send
+mailfrom: 易鑫车商金服部<yixinkp@notice.daikuan.com>
+mailTo : chuguijie@yxqiche.com,duanjinmei@yxqiche.com
+mailCc: libochen@yxqiche.com,yyue@yxqiche.com
+
+#邮件格式
+mailFormat: msg,eml
+
+#文件服务器地址
+fileServiceURL: http://192.168.145.99:8080
+#文件服务器地址（展示图片用）
+fileServerUrl: http://192.168.145.99:8080
+
+#查看图片
+viewFileServerPath: http://192.168.145.34/
+
+#获取银企日滚动数据地址
+paymentData: 
+  url: http://172.31.9.47:8080/payment/dataManage/countInfo
+  
+#获取中台日滚动数据地址
+ztDayData: 
+  url: http://192.168.155.128/hscsm/api/public/day/flow/selectDataByDay
+#获取中台月滚动数据地址
+ztMonthData: 
+  url: http://192.168.155.128/hscsm/api/public/month/flow/selectDataByMonth
+
+#车型库
+carStyleUrl: http://192.168.145.101:8080/vehicletypelib-web/api
+
+#中台url
+sgToErpUrl: http://192.168.155.128/hscsm
+
+fileContextPath: /data1/d_info/garage-server/
+
+#进销存
+rentCarUrl: http://192.168.145.94:8080/rentcar-web
